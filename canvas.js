@@ -47,6 +47,15 @@ console.log(canvas)
 // }
 
 // animation works by constantly refreshing the page while chaging the x and y values
+let mouse = {
+  x: undefined,
+  y: undefined
+}
+
+window.addEventListener('mousemove', function (event) {
+  mouse.x = event.x
+  mouse.y = event.y
+})
 
 function Circle (x, y, dx, dy, radius) {
   this.x = x
@@ -56,12 +65,11 @@ function Circle (x, y, dx, dy, radius) {
   this.radius = radius
 
   this.draw = function () {
-    console.log('fhdahfla;')
     c.beginPath()
     c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-    c.strokeStyle = 'black'
-    c.stroke()
+    c.strokeStyle = 'lightgrey'
     c.fill()
+    c.stroke()
   }
 
   this.update = function () {
@@ -74,6 +82,14 @@ function Circle (x, y, dx, dy, radius) {
     }
     this.x += this.dx
     this.y += this.dy
+
+    // interactivity
+    if (mouse.x - this.x < 50 && mouse.x - this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
+      this.radius += 1
+    } else if (this.radius > 2) {
+      this.radius -= 1
+    }
+
     this.draw()
   }
 }
@@ -83,11 +99,10 @@ for (let i = 0; i < 100; i++) {
   let radius = 30
   let x = Math.random() * (innerWidth - radius * 2) + radius
   let y = Math.random() * (innerHeight - radius * 2) + radius
-  let dx = (Math.random() - 0.5) * 6
-  let dy = (Math.random() - 0.5) * 6
+  let dx = (Math.random() - 0.5) * 3
+  let dy = (Math.random() - 0.5) * 3
   circleArray.push(new Circle(x, y, dx, dy, radius))
 }
-console.log(circleArray)
 
 const animate = () => {
   requestAnimationFrame(animate)
