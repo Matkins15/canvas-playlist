@@ -1,5 +1,8 @@
+/* Globals innerWidth */
 let canvas = document.querySelector('canvas')
 
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
 // c = context
 let c = canvas.getContext('2d')
 
@@ -103,8 +106,10 @@ function Circle (x, y, dx, dy, radius) {
   }
 }
 
+let circleArray = []
+
 function init () {
-  let circleArray = []
+  circleArray = []
   for (let i = 0; i < 300; i++) {
     let radius = Math.random() * 3 + 1
     let x = Math.random() * (innerWidth - radius * 2) + radius
@@ -114,6 +119,8 @@ function init () {
     circleArray.push(new Circle(x, y, dx, dy, radius))
   }
 }
+
+init()
 
 const animate = () => {
   requestAnimationFrame(animate)
